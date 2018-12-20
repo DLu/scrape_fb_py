@@ -27,7 +27,7 @@ def save_raw_profile(key, raw):
         os.mkdir(CACHED_PROFILE_FOLDER)
     filename = os.path.join(CACHED_PROFILE_FOLDER, str(key))
     with open(filename, 'w') as f:
-        f.write(raw)
+        f.write(raw.encode('utf8'))
 
 
 def get_profile(key, cookies, save=True, use_cached=True):
@@ -35,7 +35,7 @@ def get_profile(key, cookies, save=True, use_cached=True):
     if use_cached and os.path.exists(cached_filename):
         raw = open(cached_filename).read()
     else:
-        raw = get_raw_profile(key)
+        raw = get_raw_profile(key, cookies)
 
     try:
         profile = parse_profile(raw)
